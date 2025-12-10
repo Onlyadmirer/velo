@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Elsie, DM_Sans } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const fontElsie = Elsie({
   subsets: ["latin"],
+  variable: "--font-elsie",
+  weight: ["400", "900"],
 });
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const fontDMSans = DM_Sans({
   subsets: ["latin"],
+  variable: "--font-dm-sans",
+  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -23,9 +24,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang='en'>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${fontElsie.variable} ${fontDMSans.variable} antialiased`}
       >
         {children}
       </body>
