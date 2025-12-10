@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Elsie, DM_Sans } from "next/font/google";
 import "./globals.css";
+import Layout from "@/layouts/Layout";
 
 const fontElsie = Elsie({
   subsets: ["latin"],
@@ -28,7 +29,7 @@ export default function RootLayout({
       <body
         className={`${fontElsie.variable} ${fontDMSans.variable} antialiased`}
       >
-        {children}
+        <Layout>{children}</Layout>
       </body>
     </html>
   );
