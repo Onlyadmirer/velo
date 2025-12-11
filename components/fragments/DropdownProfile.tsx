@@ -11,14 +11,19 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { IoIosArrowDown } from "react-icons/io";
 
-function DropdownProfile() {
+interface DropdownProfileProps {
+  className?: string;
+  align?: "center" | "start" | "end" | undefined;
+}
+
+function DropdownProfile({ className, align }: DropdownProfileProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className='flex flex-row items-center gap-1'>
         <h1>Akmal</h1>
         <IoIosArrowDown />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className='translate-y-5.5'>
+      <DropdownMenuContent className={`${className}`} align={align}>
         <DropdownMenuGroup>
           <DropdownMenuItem className='flex flex-row gap-2 items-center'>
             <Avatar>

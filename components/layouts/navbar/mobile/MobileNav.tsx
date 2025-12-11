@@ -1,0 +1,67 @@
+import DropdownProfile from "@/components/fragments/DropdownProfile";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import Link from "next/link";
+import { FaBars, FaShoppingCart } from "react-icons/fa";
+import { IoIosSearch } from "react-icons/io";
+import { IoPerson } from "react-icons/io5";
+
+function MobileNav() {
+  return (
+    <div className='px-8 flex justify-between items-center'>
+      <div>
+        <h1 className='font-elsie text-3xl font-bold'>VELO</h1>
+      </div>
+      <div className='flex flex-row gap-3 items-center'>
+        <div className='rounded-full p-2 flex justify-center items-center bg-neutral-200'>
+          <IoIosSearch size={20} />
+        </div>
+        <div className='rounded-full p-2 flex justify-center items-center bg-neutral-200'>
+          <FaShoppingCart size={20} />
+        </div>
+        <Sheet>
+          <SheetTrigger>
+            <FaBars size={22} />
+          </SheetTrigger>
+          <SheetContent>
+            <SheetHeader>
+              <SheetTitle className='text-2xl'>Navigation</SheetTitle>
+            </SheetHeader>
+            <nav className='px-4'>
+              <ul className='flex flex-col text-lg justify-center gap-4 text-dm-sans'>
+                <li>
+                  <Link href='home'>Home</Link>
+                </li>
+                <li>
+                  <Link href='shop'>Shop</Link>
+                </li>
+                <li>
+                  <Link href='contactUs'>Contact Us</Link>
+                </li>
+              </ul>
+            </nav>
+            <SheetFooter className='flex gap-4'>
+              <div className='flex items-center gap-4 flex-row'>
+                <IoPerson />
+                <DropdownProfile
+                  align='start'
+                  className='w-64 -translate-x-4.5'
+                />
+              </div>
+              <Button>Hubungi Kami</Button>
+            </SheetFooter>
+          </SheetContent>
+        </Sheet>
+      </div>
+    </div>
+  );
+}
+
+export default MobileNav;
