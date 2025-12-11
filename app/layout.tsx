@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Elsie, DM_Sans } from "next/font/google";
 import "./globals.css";
-import Layout from "@/layouts/Layout";
+import Layout from "@/components/layouts/Layout";
 
 const fontElsie = Elsie({
   subsets: ["latin"],
