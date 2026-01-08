@@ -1,11 +1,14 @@
 export interface Product {
   id: number;
   name: string;
-  price: number;
-  description: string;
   category: string;
+  price: number;
+  originalPrice?: number;
+  rating: number;
+  reviews: number;
   image: string;
-  slug: string;
+  isNew?: boolean;
+  discount?: number;
 }
 
 export interface APIResponse<T> {

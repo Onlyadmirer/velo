@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@plugin 'tailwind-scrollbar';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -10,6 +11,19 @@
   .font-dmd-sans {
     font-family: var(--font-dm-sans);
   }
+  /* .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;            
+    height: 6px;           
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent; 
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1; 
+    border-radius: 20px;      
+} */
 }
 
 @theme inline {
@@ -121,7 +135,7 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border outline-ring/50 scroll-smooth;
   }
   body {
     @apply bg-background text-foreground;

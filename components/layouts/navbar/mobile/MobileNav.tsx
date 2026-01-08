@@ -9,9 +9,12 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import Link from "next/link";
+import { BsTelephoneInbound } from "react-icons/bs";
 import { FaBars, FaShoppingCart } from "react-icons/fa";
+import { GoHome } from "react-icons/go";
 import { IoIosSearch } from "react-icons/io";
 import { IoPerson } from "react-icons/io5";
+import { RiShoppingBag4Line } from "react-icons/ri";
 
 function MobileNav() {
   return (
@@ -35,15 +38,30 @@ function MobileNav() {
               <SheetTitle className='text-2xl'>Navigation</SheetTitle>
             </SheetHeader>
             <nav className='px-4'>
-              <ul className='flex flex-col text-lg justify-center gap-4 text-dm-sans'>
+              <ul className='flex flex-col text-lg justify-center gap-2 text-dm-sans'>
                 <li>
-                  <Link href='home'>Home</Link>
+                  <Link href='/' scroll={false}>
+                    <div className='bg-neutral-100 p-2 w-full rounded-lg flex flex-row items-center gap-4 px-6'>
+                      <GoHome />
+                      <p>Home</p>
+                    </div>
+                  </Link>
                 </li>
                 <li>
-                  <Link href='shop'>Shop</Link>
+                  <Link href='/shop' scroll={false}>
+                    <div className='bg-neutral-100 p-2 w-full rounded-lg flex flex-row items-center gap-4 px-6'>
+                      <RiShoppingBag4Line />
+                      <p>Shop</p>
+                    </div>
+                  </Link>
                 </li>
                 <li>
-                  <Link href='contactUs'>Contact Us</Link>
+                  <Link href='/contact' scroll={false}>
+                    <div className='bg-neutral-100 p-2 w-full rounded-lg flex flex-row items-center gap-4 px-6'>
+                      <BsTelephoneInbound />
+                      <p>Contact Us</p>
+                    </div>
+                  </Link>
                 </li>
               </ul>
             </nav>
