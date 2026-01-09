@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { LoginForm, formLoginSchema } from "../schema/authSchema";
+import { RegisterForm, formRegisterSchema } from "../schema/authSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
 import { useState } from "react";
 
-function Login() {
+function Register() {
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const {
@@ -17,8 +17,8 @@ function Login() {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<LoginForm>({
-    resolver: zodResolver(formLoginSchema),
+  } = useForm<RegisterForm>({
+    resolver: zodResolver(formRegisterSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -35,6 +35,17 @@ function Login() {
             id='email'
             type='email'
             {...register("email")}
+            className='bg-gray-100'
+          />
+        </div>
+        <div>
+          <Label className='mb-1'>Name</Label>
+          <Input
+            placeholder='Your Name'
+            required
+            id='name'
+            type='text'
+            {...register("name")}
             className='bg-gray-100'
           />
         </div>
@@ -58,10 +69,10 @@ function Login() {
           </div>
           <p className='text-sm text-red-500'>{errors.password?.message}</p>
         </div>
-        <Button type='submit'>Sign in</Button>
+        <Button type='submit'>Create Account</Button>
       </form>
     </div>
   );
 }
 
-export default Login;
+export default Register;
