@@ -1,7 +1,17 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import DekstopNav from "./dekstop/DekstopNav";
 import MobileNav from "./mobile/MobileNav";
 
 function Navbar() {
+  const pathName = usePathname();
+  const disableNavbar = pathName === "/auth";
+
+  if (disableNavbar) {
+    return null;
+  }
+
   return (
     <div className=' py-4 border-b z-100 sticky top-0 bg-secondary border-neutral-300 '>
       <div className='hidden lg:block'>
