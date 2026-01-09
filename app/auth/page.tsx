@@ -2,15 +2,11 @@
 
 import Image from "next/image";
 import Login from "./login/page";
-import { useState } from "react";
 import Register from "./register/page";
-import { Button } from "@/components/ui/button";
-import { FcGoogle } from "react-icons/fc";
-import { FaFacebook, FaGithub } from "react-icons/fa";
+import { useAuth } from "./useAuth";
 
 function Auth() {
-  const [isSignIn, setIsSignIn] = useState(true);
-
+  const { isSignIn, setIsSignIn } = useAuth();
   return (
     <div className='grid lg:grid-cols-2 h-screen w-full'>
       <div className='relative lg:block hidden'>
@@ -73,42 +69,6 @@ function Auth() {
           </button>
         </div>
         {isSignIn ? <Login /> : <Register />}
-
-        {/* Social Login Divider */}
-        <div className='relative my-6'>
-          <div className='absolute inset-0 flex items-center'>
-            <div className='w-full border-t border-gray-200'></div>
-          </div>
-          <div className='relative flex justify-center text-sm'>
-            <span className='px-4 bg-white text-gray-500'>
-              Or continue with
-            </span>
-          </div>
-        </div>
-
-        {/* Social Login Buttons */}
-        <div className='grid grid-cols-3 gap-3'>
-          <Button variant='outline' className='w-full'>
-            <FcGoogle />
-          </Button>
-          <Button variant='outline' className='w-full'>
-            <FaGithub />
-          </Button>
-          <Button variant='outline' className='w-full'>
-            <FaFacebook />
-          </Button>
-        </div>
-
-        {/* Footer Text */}
-        <p className='text-center text-sm text-gray-600 mt-6'>
-          {isSignIn ? "Don't have an account? " : "Already have an account? "}
-          <button
-            onClick={() => setIsSignIn(!isSignIn)}
-            className='text-blue-600 hover:text-blue-700 font-medium cursor-pointer'
-          >
-            {isSignIn ? "Sign Up" : "Sign In"}
-          </button>
-        </p>
       </div>
     </div>
   );
