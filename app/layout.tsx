@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Elsie, DM_Sans } from "next/font/google";
 import "./globals.css";
 import Layout from "@/components/layouts/Layout";
+import { Toaster } from "@/components/ui/sonner";
 
 const fontElsie = Elsie({
   subsets: ["latin"],
@@ -30,6 +31,7 @@ export default function RootLayout({
         className={`${fontElsie.variable} ${fontDMSans.variable} antialiased`}
       >
         <Layout>{children}</Layout>
+        <Toaster position='top-center' richColors />
       </body>
     </html>
   );

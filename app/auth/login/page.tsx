@@ -7,16 +7,21 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
-import { useState } from "react";
+import { useAuth } from "../useAuth";
+import { FaFacebook, FaGithub } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 
-function Login() {
-  const [passwordVisible, setPasswordVisible] = useState(false);
+interface LoginProops {
+  onSwitch: () => void;
+}
+
+function Login({ onSwitch }: LoginProops) {
+  const { onSubmitLogin, passwordVisible, setPasswordVisible } = useAuth();
 
   const {
     register,
     handleSubmit,
-    watch,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<LoginForm>({
     resolver: zodResolver(formLoginSchema),
     defaultValues: {
@@ -24,15 +29,20 @@ function Login() {
       password: "",
     },
   });
+
   return (
     <div className='w-94 mx-auto'>
-      <form className='flex flex-col gap-6'>
+      <form
+        onSubmit={handleSubmit(onSubmitLogin)}
+        className='flex flex-col gap-6'
+      >
         <div>
           <Label className='mb-1'>Email Address</Label>
           <Input
             placeholder='Email'
             required
             id='email'
+            disabled={isSubmitting}
             type='email'
             {...register("email")}
             className='bg-gray-100'
@@ -44,12 +54,14 @@ function Login() {
             <Input
               placeholder='********'
               id='password'
+              disabled={isSubmitting}
               type={passwordVisible ? "text" : "password"}
               {...register("password")}
               className='bg-gray-100'
             />
             <Button
               variant={"outline"}
+              type='button'
               className='bg-gray-100'
               onClick={() => setPasswordVisible(!passwordVisible)}
             >
@@ -58,8 +70,44 @@ function Login() {
           </div>
           <p className='text-sm text-red-500'>{errors.password?.message}</p>
         </div>
-        <Button type='submit'>Sign in</Button>
+        <Button type='submit' disabled={isSubmitting}>
+          {isSubmitting ? "Signing In..." : "Sign In"}
+        </Button>
       </form>
+
+      {/* Social Login Divider */}
+      <div className='relative my-6'>
+        <div className='absolute inset-0 flex items-center'>
+          <div className='w-full border-t border-gray-200'></div>
+        </div>
+        <div className='relative flex justify-center text-sm'>
+          <span className='px-4 bg-white text-gray-500'>Or continue with</span>
+        </div>
+      </div>
+
+      {/* Social Login Buttons */}
+      <div className='grid grid-cols-3 gap-3'>
+        <Button variant='outline' className='w-full'>
+          <FcGoogle />
+        </Button>
+        <Button variant='outline' className='w-full'>
+          <FaGithub />
+        </Button>
+        <Button variant='outline' className='w-full'>
+          <FaFacebook />
+        </Button>
+      </div>
+
+      {/* Footer Text */}
+      <p className='text-center text-sm text-gray-600 mt-6'>
+        Don't have an account?
+        <button
+          onClick={onSwitch}
+          className='text-blue-600 hover:text-blue-700 font-medium cursor-pointer'
+        >
+          Sign Up
+        </button>
+      </p>
     </div>
   );
 }
