@@ -7,14 +7,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
-import { useState } from "react";
 import { useAuth } from "../useAuth";
 import { FaFacebook, FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 
-function Login() {
-  const { isSignIn, setIsSignIn, router, passwordVisible, setPasswordVisible } =
-    useAuth();
+interface LoginProops {
+  onSwitch: () => void;
+}
+
+function Login({ onSwitch }: LoginProops) {
+  const { onSubmitLogin, passwordVisible, setPasswordVisible } = useAuth();
 
   const {
     register,
@@ -27,9 +29,13 @@ function Login() {
       password: "",
     },
   });
+
   return (
     <div className='w-94 mx-auto'>
-      <form className='flex flex-col gap-6'>
+      <form
+        onSubmit={handleSubmit(onSubmitLogin)}
+        className='flex flex-col gap-6'
+      >
         <div>
           <Label className='mb-1'>Email Address</Label>
           <Input
@@ -90,12 +96,12 @@ function Login() {
 
       {/* Footer Text */}
       <p className='text-center text-sm text-gray-600 mt-6'>
-        {isSignIn ? "Don't have an account? " : "Already have an account? "}
+        Don't have an account?
         <button
-          onClick={() => setIsSignIn(!isSignIn)}
+          onClick={onSwitch}
           className='text-blue-600 hover:text-blue-700 font-medium cursor-pointer'
         >
-          {isSignIn ? "Sign Up" : "Sign In"}
+          Sign Up
         </button>
       </p>
     </div>

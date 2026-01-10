@@ -4,11 +4,21 @@ import { FaShoppingCart } from "react-icons/fa";
 import { IoIosSearch } from "react-icons/io";
 import DropdownProfile from "../../../fragments/DropdownProfile";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import { FiLogIn } from "react-icons/fi";
 
 function DekstopNav() {
   const pathName = usePathname();
+  const router = useRouter();
+  const [isLogIn, setIsLogIn] = useState(false);
+
+  useEffect(() => {
+    const token = Cookies.get("token");
+    if (token) setIsLogIn(true);
+  }, []);
 
   return (
     <div className='max-w-7xl px-8 m-auto flex flex-row justify-between'>
@@ -64,13 +74,22 @@ function DekstopNav() {
         <div className='rounded-full p-3 flex justify-center items-center bg-neutral-200'>
           <IoIosSearch />
         </div>
-        <div className='rounded-full p-3 flex justify-center items-center bg-neutral-200'>
-          <FaShoppingCart />
-        </div>
-        <div className='flex items-center'>
-          <DropdownProfile className='translate-y-5.5' />
-        </div>
-        <Button>Hubungi Kami</Button>
+        {isLogIn ? (
+          <>
+            <div className='rounded-full p-3 flex justify-center items-center bg-neutral-200'>
+              <FaShoppingCart />
+            </div>
+            <div className='flex items-center'>
+              <DropdownProfile className='translate-y-5.5' />
+            </div>
+            <Button>Hubungi Kami</Button>
+          </>
+        ) : (
+          <Button onClick={() => router.push("/auth")}>
+            <FiLogIn />
+            Sign In
+          </Button>
+        )}
       </div>
     </div>
   );

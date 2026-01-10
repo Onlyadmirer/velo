@@ -7,15 +7,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
-import { fetchAPI } from "@/lib/fetcher";
-import { toast } from "sonner";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook, FaGithub } from "react-icons/fa";
 import { useAuth } from "../useAuth";
 
-function Register() {
-  const { isSignIn, setIsSignIn, passwordVisible, setPasswordVisible } =
-    useAuth();
+interface RegisterProps {
+  onSwitch: () => void;
+}
+
+function Register({ onSwitch }: RegisterProps) {
+  const { onSubmitRegister, passwordVisible, setPasswordVisible } = useAuth();
 
   const {
     register,
@@ -31,28 +32,16 @@ function Register() {
     },
   });
 
-  const onSubmit = async (data: RegisterForm) => {
-    try {
-      await fetchAPI("/register", {
-        method: "POST",
-        body: JSON.stringify({
-          email: data.email,
-          password: data.password,
-          name: data.name,
-        }),
-      });
-
-      toast.success("Registration Succsessfully, Please Sign In");
-      reset();
-    } catch (error) {
-      console.error(error);
-      toast.error("Registration Failed");
-    }
+  const handleRegisterSubmit = (data: RegisterForm) => {
+    onSubmitRegister(data, reset);
   };
 
   return (
     <div className='w-94 mx-auto'>
-      <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-6'>
+      <form
+        onSubmit={handleSubmit(handleRegisterSubmit)}
+        className='flex flex-col gap-6'
+      >
         <div>
           <Label className='mb-1'>Email Address</Label>
           <Input
@@ -130,13 +119,13 @@ function Register() {
 
       {/* Footer Text */}
       <p className='text-center text-sm text-gray-600 mt-6'>
-        {isSignIn ? "Don't have an account? " : "Already have an account? "}
+        Already have an account?
         <button
-          onClick={() => setIsSignIn(!isSignIn)}
+          onClick={onSwitch}
           disabled={isSubmitting}
           className='text-blue-600 hover:text-blue-700 font-medium cursor-pointer'
         >
-          {isSignIn ? "Sign Up" : "Sign In"}
+          Sign In
         </button>
       </p>
     </div>

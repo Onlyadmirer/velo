@@ -1,9 +1,69 @@
+import { fetchAPI } from "@/lib/fetcher";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
+import { LoginForm, RegisterForm } from "./schema/authSchema";
+import Cookies from "js-cookie";
+import { UseFormReset } from "react-hook-form";
 
 export const useAuth = () => {
   const [isSignIn, setIsSignIn] = useState(true);
   const router = useRouter();
   const [passwordVisible, setPasswordVisible] = useState(false);
-  return {isSignIn, setIsSignIn, router, passwordVisible, setPasswordVisible}
+
+  // Register Function
+  const onSubmitRegister = async (
+    data: RegisterForm,
+    reset: UseFormReset<RegisterForm>
+  ) => {
+    try {
+      await fetchAPI("/register", {
+        method: "POST",
+        body: JSON.stringify({
+          email: data.email,
+          password: data.password,
+          name: data.name,
+        }),
+      });
+
+      toast.success("Registration Succsessfully, Please Sign In");
+      reset();
+      setIsSignIn(true);
+    } catch (error) {
+      console.error(error);
+      toast.error("Registration Failed");
+    }
+  };
+
+  // Login Function
+  const onSubmitLogin = async (data: LoginForm) => {
+    try {
+      const response = await fetchAPI("/login", {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+
+      const token = response.data?.token || response.token;
+
+      if (!token) throw new Error("Token not found");
+
+      Cookies.set("token", token, { expires: 1 });
+
+      toast.success("Login successfully");
+      router.push("/");
+    } catch (error) {
+      console.error(error);
+      toast.error("Login failed, Email or Password is incorrect");
+    }
+  };
+
+  return {
+    onSubmitLogin,
+    onSubmitRegister,
+    isSignIn,
+    setIsSignIn,
+    router,
+    passwordVisible,
+    setPasswordVisible,
+  };
 };

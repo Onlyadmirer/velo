@@ -68,7 +68,11 @@ function Auth() {
             )}
           </button>
         </div>
-        {isSignIn ? <Login /> : <Register />}
+        {isSignIn ? (
+          <Login onSwitch={() => setIsSignIn(false)} />
+        ) : (
+          <Register onSwitch={() => setIsSignIn(true)} />
+        )}
       </div>
     </div>
   );
