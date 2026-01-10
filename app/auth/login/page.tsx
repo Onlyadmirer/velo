@@ -21,7 +21,7 @@ function Login({ onSwitch }: LoginProops) {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<LoginForm>({
     resolver: zodResolver(formLoginSchema),
     defaultValues: {
@@ -42,6 +42,7 @@ function Login({ onSwitch }: LoginProops) {
             placeholder='Email'
             required
             id='email'
+            disabled={isSubmitting}
             type='email'
             {...register("email")}
             className='bg-gray-100'
@@ -53,6 +54,7 @@ function Login({ onSwitch }: LoginProops) {
             <Input
               placeholder='********'
               id='password'
+              disabled={isSubmitting}
               type={passwordVisible ? "text" : "password"}
               {...register("password")}
               className='bg-gray-100'
@@ -68,7 +70,9 @@ function Login({ onSwitch }: LoginProops) {
           </div>
           <p className='text-sm text-red-500'>{errors.password?.message}</p>
         </div>
-        <Button type='submit'>Sign in</Button>
+        <Button type='submit' disabled={isSubmitting}>
+          {isSubmitting ? "Signing In..." : "Sign In"}
+        </Button>
       </form>
 
       {/* Social Login Divider */}
