@@ -16,7 +16,8 @@ interface LoginProops {
 }
 
 function Login({ onSwitch }: LoginProops) {
-  const { onSubmitLogin, passwordVisible, setPasswordVisible } = useAuth();
+  const { onSubmitLogin, router, passwordVisible, setPasswordVisible } =
+    useAuth();
 
   const {
     register,
@@ -86,9 +87,15 @@ function Login({ onSwitch }: LoginProops) {
       </div>
 
       {/* google Login Buttons */}
-      <div className='grid grid-cols-3 gap-3'>
-        <Button variant='outline' className='w-full'>
+      <div>
+        <Button
+          onClick={() => router.push("http://localhost:8080/auth/google/login")}
+          variant='outline'
+          disabled={isSubmitting}
+          className='w-full'
+        >
           <FcGoogle />
+          Google
         </Button>
       </div>
 
