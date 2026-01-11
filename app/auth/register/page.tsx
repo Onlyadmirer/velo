@@ -104,16 +104,10 @@ function Register({ onSwitch }: RegisterProps) {
         </div>
       </div>
 
-      {/* Social Login Buttons */}
+      {/* google Login Buttons */}
       <div className='grid grid-cols-3 gap-3'>
         <Button variant='outline' disabled={isSubmitting} className='w-full'>
           <FcGoogle />
-        </Button>
-        <Button variant='outline' disabled={isSubmitting} className='w-full'>
-          <FaGithub />
-        </Button>
-        <Button variant='outline' disabled={isSubmitting} className='w-full'>
-          <FaFacebook />
         </Button>
       </div>
 

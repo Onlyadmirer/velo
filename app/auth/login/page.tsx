@@ -85,16 +85,10 @@ function Login({ onSwitch }: LoginProops) {
         </div>
       </div>
 
-      {/* Social Login Buttons */}
+      {/* google Login Buttons */}
       <div className='grid grid-cols-3 gap-3'>
         <Button variant='outline' className='w-full'>
           <FcGoogle />
-        </Button>
-        <Button variant='outline' className='w-full'>
-          <FaGithub />
-        </Button>
-        <Button variant='outline' className='w-full'>
-          <FaFacebook />
         </Button>
       </div>
 
