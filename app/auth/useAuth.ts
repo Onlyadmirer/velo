@@ -68,6 +68,7 @@ export const useAuth = () => {
     try {
       const response = await fetchAPI("/me", {
         method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
       });
       if (response.data) {
         setUser(response.data);
@@ -77,11 +78,10 @@ export const useAuth = () => {
       Cookies.remove("token");
       setUser(null);
     }
-
-    useEffect(() => {
-      fetchUser();
-    }, []);
   };
+  useEffect(() => {
+    fetchUser();
+  }, []);
   return {
     onSubmitLogin,
     onSubmitRegister,

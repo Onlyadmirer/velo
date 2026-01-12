@@ -19,6 +19,7 @@ interface DropdownProfileProps {
 
 function DropdownProfile({ className, align }: DropdownProfileProps) {
   const { user } = useAuth();
+  console.log(user);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className='flex flex-row items-center gap-1'>
