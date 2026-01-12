@@ -1,15 +1,17 @@
 import { fetchAPI } from "@/lib/fetcher";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { LoginForm, RegisterForm } from "./schema/authSchema";
 import Cookies from "js-cookie";
 import { UseFormReset } from "react-hook-form";
+import { User } from "@/types/user";
 
 export const useAuth = () => {
   const [isSignIn, setIsSignIn] = useState(true);
   const router = useRouter();
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
 
   // Register Function
   const onSubmitRegister = async (
@@ -57,9 +59,50 @@ export const useAuth = () => {
     }
   };
 
+  // get data user
+  const fetchUser = async () => {
+    const token = Cookies.get("token");
+    if (!token) {
+      return;
+    }
+    try {
+      const response = await fetchAPI("/me", {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (response.data) {
+        setUser(response.data);
+      }
+    } catch (error) {
+      console.error("gagal ambil data user", error);
+      Cookies.remove("token");
+      setUser(null);
+    }
+  };
+
+  // logout
+  const logout = async () => {
+    try {
+      await fetchAPI("/logout", {
+        method: "POST",
+      });
+    } catch (error) {
+      console.error("gagal logout", error);
+    } finally {
+      Cookies.remove("token");
+      setUser(null);
+      router.push("/auth");
+      router.refresh();
+    }
+  };
+  useEffect(() => {
+    fetchUser();
+  }, []);
   return {
     onSubmitLogin,
     onSubmitRegister,
+    user,
+    logout,
     isSignIn,
     setIsSignIn,
     router,

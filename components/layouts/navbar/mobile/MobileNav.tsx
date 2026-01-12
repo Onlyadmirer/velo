@@ -9,6 +9,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { BsTelephoneInbound } from "react-icons/bs";
 import { FaBars, FaShoppingCart } from "react-icons/fa";
 import { GoHome } from "react-icons/go";
@@ -17,6 +18,16 @@ import { IoPerson } from "react-icons/io5";
 import { RiShoppingBag4Line } from "react-icons/ri";
 
 function MobileNav() {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null;
+  }
+
   return (
     <div className='px-8 flex justify-between items-center'>
       <div>

@@ -16,7 +16,8 @@ interface RegisterProps {
 }
 
 function Register({ onSwitch }: RegisterProps) {
-  const { onSubmitRegister, passwordVisible, setPasswordVisible } = useAuth();
+  const { onSubmitRegister, router, passwordVisible, setPasswordVisible } =
+    useAuth();
 
   const {
     register,
@@ -104,16 +105,16 @@ function Register({ onSwitch }: RegisterProps) {
         </div>
       </div>
 
-      {/* Social Login Buttons */}
-      <div className='grid grid-cols-3 gap-3'>
-        <Button variant='outline' disabled={isSubmitting} className='w-full'>
+      {/* google Login Buttons */}
+      <div>
+        <Button
+          onClick={() => router.push("http://localhost:8080/auth/google/login")}
+          variant='outline'
+          disabled={isSubmitting}
+          className='w-full'
+        >
           <FcGoogle />
-        </Button>
-        <Button variant='outline' disabled={isSubmitting} className='w-full'>
-          <FaGithub />
-        </Button>
-        <Button variant='outline' disabled={isSubmitting} className='w-full'>
-          <FaFacebook />
+          Google
         </Button>
       </div>
 
