@@ -11,6 +11,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { IoIosArrowDown } from "react-icons/io";
+import { Button } from "../ui/button";
+import { FiLogOut } from "react-icons/fi";
 
 interface DropdownProfileProps {
   className?: string;
@@ -18,8 +20,7 @@ interface DropdownProfileProps {
 }
 
 function DropdownProfile({ className, align }: DropdownProfileProps) {
-  const { user } = useAuth();
-  console.log(user);
+  const { user, logout } = useAuth();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className='flex flex-row items-center gap-1'>
@@ -37,8 +38,16 @@ function DropdownProfile({ className, align }: DropdownProfileProps) {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem></DropdownMenuItem>
-        <DropdownMenuItem></DropdownMenuItem>
+        <DropdownMenuItem>
+          <Button
+            variant={"destructive"}
+            className='w-full'
+            onClick={() => logout()}
+          >
+            <FiLogOut className='text-white' />
+            Logout
+          </Button>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

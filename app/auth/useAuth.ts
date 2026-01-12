@@ -79,6 +79,22 @@ export const useAuth = () => {
       setUser(null);
     }
   };
+
+  // logout
+  const logout = async () => {
+    try {
+      await fetchAPI("/logout", {
+        method: "POST",
+      });
+    } catch (error) {
+      console.error("gagal logout", error);
+    } finally {
+      Cookies.remove("token");
+      setUser(null);
+      router.push("/auth");
+      router.refresh();
+    }
+  };
   useEffect(() => {
     fetchUser();
   }, []);
@@ -86,6 +102,7 @@ export const useAuth = () => {
     onSubmitLogin,
     onSubmitRegister,
     user,
+    logout,
     isSignIn,
     setIsSignIn,
     router,
