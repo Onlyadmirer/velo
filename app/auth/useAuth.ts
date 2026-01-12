@@ -52,6 +52,7 @@ export const useAuth = () => {
       Cookies.set("token", token, { expires: 1 });
 
       toast.success("Login successfully");
+      router.refresh();
       router.push("/");
     } catch (error) {
       console.error(error);
@@ -95,9 +96,11 @@ export const useAuth = () => {
       router.refresh();
     }
   };
+
   useEffect(() => {
     fetchUser();
   }, []);
+
   return {
     onSubmitLogin,
     onSubmitRegister,
