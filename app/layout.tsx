@@ -31,7 +31,7 @@ export default function RootLayout({
         className={`${fontElsie.variable} ${fontDMSans.variable} antialiased`}
       >
         <Layout>{children}</Layout>
-        <Toaster position='top-center' richColors />
+        <Toaster position='top-center' />
       </body>
     </html>
   );

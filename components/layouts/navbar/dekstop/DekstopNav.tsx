@@ -31,7 +31,6 @@ function DekstopNav() {
             <li>
               <Link
                 href={"/"}
-                scroll={false}
                 className={`${
                   pathName === "/"
                     ? "text-neutral-900 border-b-2 border-neutral-600"
@@ -44,7 +43,6 @@ function DekstopNav() {
             <li>
               <Link
                 href={"/shop"}
-                scroll={false}
                 className={`${
                   pathName === "/shop"
                     ? "text-neutral-900 border-b-2 border-neutral-600"
@@ -57,7 +55,6 @@ function DekstopNav() {
             <li>
               <Link
                 href={"/contact"}
-                scroll={false}
                 className={`${
                   pathName === "/contact"
                     ? "text-neutral-900 border-b-2 border-neutral-600"
