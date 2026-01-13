@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { IoMdArrowForward } from "react-icons/io";
+import Link from "next/link";
 
 function HeroSection() {
   return (
@@ -26,10 +27,12 @@ function HeroSection() {
           </h2>
         </div>
         <div className='py-4 flex flex-col items-start justify-start sm:flex-row gap-4'>
-          <Button className='rounded-full' size={"lg"}>
-            Belanja Sekarang
-            <IoMdArrowForward className='translate-y-0.5' />
-          </Button>
+          <Link href={"/shop"}>
+            <Button className='rounded-full' size={"lg"}>
+              Belanja Sekarang
+              <IoMdArrowForward className='translate-y-0.5' />
+            </Button>
+          </Link>
           <Button
             variant={"outline"}
             size={"lg"}
