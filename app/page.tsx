@@ -1,18 +1,17 @@
-
-import { FeaturedCollections } from "@/components/sections/FeaturedCollection";
-import HeroSection from "@/components/sections/HeroSection";
-import { Newsletter } from "@/components/sections/NewsLetter";
-import { Products } from "@/components/sections/Products";
-import { SpecialOffers } from "@/components/sections/SpecialOffers";
+import { FeaturedCollections } from "@/components/home/FeaturedCollection";
+import HeroSection from "@/components/home/HeroSection";
+import { Newsletter } from "@/components/home/NewsLetter";
+import { Products } from "@/components/home/Products";
+import { SpecialOffers } from "@/components/home/SpecialOffers";
 
 export default function Home() {
   return (
     <>
-        <HeroSection />
-        <FeaturedCollections />
-        <SpecialOffers />
-        <Products />
-        <Newsletter />
+      <HeroSection />
+      <FeaturedCollections />
+      <SpecialOffers />
+      <Products />
+      <Newsletter />
     </>
   );
 }
