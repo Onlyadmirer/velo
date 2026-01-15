@@ -5,30 +5,34 @@ import { useEffect, useState } from "react";
 export function useCart() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
-  const fetchCartItems = async () => {
-    const response = await fetchAPI("/cart", {
-      cache: "no-store",
-      method: "GET",
-    });
-    setCartItems(response.data || []);
-  };
-
   useEffect(() => {
+    const fetchCartItems = async () => {
+      const response = await fetchAPI("/cart", {
+        cache: "no-store",
+        method: "GET",
+      });
+      setCartItems(response.data || []);
+    };
+
     fetchCartItems();
   }, []);
 
-  // const updateQuantity = (id: number, newQuantity: number) => {
-  //   if (newQuantity < 1) return;
-  //   setCartItems(
-  //     cartItems.map((item) =>
-  //       item.id === id ? { ...item, quantity: newQuantity } : item
-  //     )
-  //   );
-  // };
+  const updateQuantity = (id: number, newQuantity: number) => {
+    if (newQuantity < 1) return;
+    setCartItems(
+      cartItems.map((item): CartItem => {
+        if (item.id === id) {
+          if (newQuantity > item.product.quantity) return item
+          return { ...item, quantity: newQuantity }
+        }
+        return item
+      })
+    )
+  }
 
-  // const removeItem = (id: number) => {
-  //   setCartItems(cartItems.filter((item) => item.id !== id));
-  // };
+  const removeItem = (id: number) => {
+    setCartItems(cartItems.filter((item) => item.id !== id));
+  };
 
   const subtotal = cartItems.reduce(
     (sum, item) => sum + item.product.price * item.quantity,
@@ -41,5 +45,7 @@ export function useCart() {
   return {
     cartItems,
     subtotal,
+    removeItem,
+    updateQuantity
   };
 }

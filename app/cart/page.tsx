@@ -4,9 +4,11 @@ import { Minus, Plus, Trash2, ShoppingBag, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "./useCart";
 import { formatRupiah } from "@/lib/formatRupiah";
+import Image from "next/image";
+import Link from "next/link";
 
 function CartPage() {
-  const { cartItems, subtotal } = useCart();
+  const { cartItems, subtotal, removeItem, updateQuantity } = useCart();
 
   if (cartItems.length === 0) {
     return (
@@ -19,7 +21,7 @@ function CartPage() {
             </div>
             <h2 className='mb-4 text-gray-900'>Your Cart is Empty</h2>
             <p className='text-gray-600 mb-8'>
-              Looks like you haven't added anything to your cart yet.
+              Looks like you haven`t added anything to your cart yet.
             </p>
             <Button className='bg-black hover:bg-gray-800 text-white'>
               Start Shopping
@@ -35,13 +37,13 @@ function CartPage() {
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12'>
         {/* Header */}
         <div className='mb-8'>
-          <a
-            href='#'
+          <Link
+            href='/shop'
             className='inline-flex items-center gap-2 text-gray-600 hover:text-black mb-4 transition-colors'
           >
             <ArrowLeft className='w-4 h-4' />
             Continue Shopping
-          </a>
+          </Link>
           <div className='flex items-center justify-between'>
             <div>
               <h1 className='text-gray-900'>Shopping Cart</h1>
@@ -63,13 +65,14 @@ function CartPage() {
               >
                 <div className='flex gap-4'>
                   {/* Product Image */}
-                  {/* <div className='shrink-0 w-24 h-24 md:w-32 md:h-32 bg-gray-100 rounded-lg overflow-hidden'>
-                    <img
-                      src={item.image}
-                      alt={item.name}
+                  <div className='shrink-0 relative w-24 h-auto md:w-32 md:h-32 bg-gray-100 rounded-lg overflow-hidden'>
+                    <Image
+                      src={item.product?.image}
+                      alt={item.product?.name}
+                      fill
                       className='w-full h-full object-cover'
                     />
-                  </div> */}
+                  </div>
 
                   {/* Product Details */}
                   <div className='flex-1 min-w-0'>
@@ -79,44 +82,47 @@ function CartPage() {
                           {item.product?.name}
                         </h3>
                       </div>
-                      {/* <button
+                      <Button
                         onClick={() => removeItem(item.id)}
-                        className='p-2 text-gray-400 hover:text-red-600 transition-colors ml-2'
+                        variant={"destructive"}
                         aria-label='Remove item'
                       >
                         <Trash2 className='w-5 h-5' />
-                      </button> */}
+                      </Button>
                     </div>
 
                     {/* Price and Quantity */}
-                    <div className='flex items-center justify-between mt-4'>
-                      <div className='font-semibold text-gray-900'>
-                        {formatRupiah(item.product?.price)}
+                    <div className='flex flex-col sm:flex-row gap-2 md:items-center justify-between mt-4'>
+                      <div className='space-y-1'>
+                        <h2 className='text-gray-600'>
+                          stock: {item.product?.quantity}
+                        </h2>
+                        <h1 className='font-semibold text-gray-900'>
+                          {formatRupiah(item.product?.price)}
+                        </h1>
                       </div>
 
                       {/* Quantity Selector */}
-                      <div className='flex items-center border border-gray-300 rounded-lg overflow-hidden'>
-                        {/* <button
+                      <div className='flex items-center gap-2 overflow-hidden'>
+                        <Button
                           onClick={() =>
                             updateQuantity(item.id, item.quantity - 1)
                           }
-                          className='p-2 hover:bg-gray-100 transition-colors'
                           aria-label='Decrease quantity'
                         >
                           <Minus className='w-4 h-4' />
-                        </button> */}
-                        <span className='px-4 py-2 min-w-12 text-center border-x border-gray-300'>
+                        </Button>
+                        <span className='px-4 py-2 min-w-12 text-center border rounded-md border-gray-300'>
                           {item.quantity}
                         </span>
-                        {/* <button
+                        <Button
                           onClick={() =>
                             updateQuantity(item.id, item.quantity + 1)
                           }
-                          className='p-2 hover:bg-gray-100 transition-colors'
                           aria-label='Increase quantity'
                         >
                           <Plus className='w-4 h-4' />
-                        </button> */}
+                        </Button>
                       </div>
                     </div>
 
