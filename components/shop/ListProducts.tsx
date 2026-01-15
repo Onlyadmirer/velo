@@ -4,9 +4,10 @@ import { Search, ChevronDown, ShoppingCart, Star } from "lucide-react";
 import { Button } from "../ui/button";
 import { useShop } from "./useShop";
 import { formatRupiah } from "@/lib/formatRupiah";
+import Image from "next/image";
 
 export function ListProducts() {
-  const { products } = useShop();
+  const { products, addToCart } = useShop();
   return (
     <div>
       {/* Search and Filter Bar */}
@@ -63,9 +64,10 @@ export function ListProducts() {
           >
             {/* Product Image */}
             <div className='relative overflow-hidden aspect-3/4'>
-              <img
+              <Image
                 src={product.image}
                 alt={product.name}
+                fill
                 className='w-full h-full object-cover group-hover:scale-110 transition-transform duration-500'
               />
 
@@ -100,7 +102,15 @@ export function ListProducts() {
               </div>
 
               {/* Add to Cart Button */}
-              <Button className='w-full' variant='outline'>
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  addToCart(product.id, 1);
+                }}
+                className='w-full'
+                variant='outline'
+              >
                 <ShoppingCart className='w-4 h-4 mr-2' />
                 <p>Add to chart</p>
               </Button>

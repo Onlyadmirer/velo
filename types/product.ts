@@ -3,12 +3,10 @@ export interface Product {
   name: string;
   category: string;
   price: number;
-  originalPrice?: number;
   rating: number;
+  quantity: number;
   reviews: number;
   image: string;
-  isNew?: boolean;
-  discount?: number;
 }
 
 export interface APIResponse<T> {
