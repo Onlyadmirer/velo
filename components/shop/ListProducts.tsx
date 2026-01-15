@@ -3,9 +3,10 @@
 import { Search, ChevronDown, ShoppingCart, Star } from "lucide-react";
 import { Button } from "../ui/button";
 import { useShop } from "./useShop";
+import { formatRupiah } from "@/lib/formatRupiah";
 
 export function ListProducts() {
-  const { products, formatPrice } = useShop();
+  const { products } = useShop();
   return (
     <div>
       {/* Search and Filter Bar */}
@@ -94,7 +95,7 @@ export function ListProducts() {
               {/* Price */}
               <div className='flex items-center gap-2 mb-4'>
                 <span className='font-semibold'>
-                  {formatPrice(product.price)}
+                  {formatRupiah(product.price)}
                 </span>
               </div>
 
