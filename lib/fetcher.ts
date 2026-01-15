@@ -1,18 +1,27 @@
+import Cookies from "js-cookie";
 
-export const API_URL = process.env.NEXT_PUBLIC_API_URL
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export async function fetchAPI(url: string, options: RequestInit = {}) {
-  const res = await fetch(`${API_URL}${url}`, {
-    ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...options.headers
-    }
-  })
+  const token = Cookies.get("token");
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch API")
+  const headers = {
+    "Content-type": "application/json",
+    ...options.headers,
+  } as Record<string, string>;
+
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
   }
 
-  return res.json()
+  const res = await fetch(`${API_URL}${url}`, {
+    ...options,
+    headers,
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch API");
+  }
+
+  return res.json();
 }
