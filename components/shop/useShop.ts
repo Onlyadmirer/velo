@@ -17,12 +17,5 @@ export const useShop = () => {
     productsData();
   }, []);
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-      minimumFractionDigits: 0,
-    }).format(price);
-  };
-  return { products, formatPrice };
+  return { products };
 };
