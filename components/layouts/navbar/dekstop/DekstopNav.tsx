@@ -73,9 +73,11 @@ function DekstopNav() {
         </div>
         {isLogIn ? (
           <>
-            <div className='rounded-full p-3 flex justify-center items-center bg-neutral-200'>
-              <FaShoppingCart />
-            </div>
+            <Link href='/cart'>
+              <div className='rounded-full p-3 flex justify-center items-center bg-neutral-200'>
+                <FaShoppingCart />
+              </div>
+            </Link>
             <div className='flex items-center'>
               <DropdownProfile className='translate-y-5.5' />
             </div>
