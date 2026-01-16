@@ -6,16 +6,26 @@ import DropdownProfile from "../../../fragments/DropdownProfile";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { FiLogIn } from "react-icons/fi";
 
 function DekstopNav() {
+  const [mounted, setMounted] = useState(false);
   const pathName = usePathname();
   const router = useRouter();
   const [isLogIn] = useState(() => {
     return Boolean(Cookies.get("token"));
   });
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <div className='max-w-7xl px-8 m-auto flex flex-row justify-between'>
