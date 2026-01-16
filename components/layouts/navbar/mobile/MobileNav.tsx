@@ -9,7 +9,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { BsTelephoneInbound } from "react-icons/bs";
 import { FaBars, FaShoppingCart } from "react-icons/fa";
 import { GoHome } from "react-icons/go";
@@ -18,13 +18,14 @@ import { IoPerson } from "react-icons/io5";
 import { RiShoppingBag4Line } from "react-icons/ri";
 
 function MobileNav() {
-  const isMounted = useRef(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    isMounted.current = true;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
   }, []);
 
-  if (!isMounted) {
+  if (!mounted) {
     return null;
   }
 
