@@ -6,19 +6,16 @@ import DropdownProfile from "../../../fragments/DropdownProfile";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Cookies from "js-cookie";
 import { FiLogIn } from "react-icons/fi";
 
 function DekstopNav() {
   const pathName = usePathname();
   const router = useRouter();
-  const [isLogIn, setIsLogIn] = useState(false);
-
-  useEffect(() => {
-    const token = Cookies.get("token");
-    if (token) setIsLogIn(true);
-  }, []);
+  const [isLogIn] = useState(() => {
+    return Boolean(Cookies.get("token"));
+  });
 
   return (
     <div className='max-w-7xl px-8 m-auto flex flex-row justify-between'>
