@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { useShop } from "./useShop";
 import { formatRupiah } from "@/lib/formatRupiah";
 import Image from "next/image";
+import Link from "next/link";
 
 export function ListProducts() {
   const { products, addToCart } = useShop();
@@ -58,64 +59,63 @@ export function ListProducts() {
       {/* Products Grid */}
       <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-6 mb-12'>
         {products.map((product) => (
-          <div
-            key={product.id}
-            className='bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 group'
-          >
-            {/* Product Image */}
-            <div className='relative overflow-hidden aspect-3/4'>
-              <Image
-                src={product.image}
-                alt={product.name}
-                fill
-                className='w-full h-full object-cover group-hover:scale-110 transition-transform duration-500'
-              />
+          <Link href={`/shop/${product.id}`} key={product.id}>
+            <div className='bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 group'>
+              {/* Product Image */}
+              <div className='relative overflow-hidden aspect-3/4'>
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  fill
+                  className='w-full h-full object-cover group-hover:scale-110 transition-transform duration-500'
+                />
 
-              {/* Quick Add Button */}
-              <div className='absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center'>
+                {/* Quick Add Button */}
+                <div className='absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center'>
+                  <Button
+                    size='sm'
+                    className='bg-white text-black hover:bg-gray-100'
+                  >
+                    <ShoppingCart className='w-4 h-4 mr-2' />
+                    Detail Product
+                  </Button>
+                </div>
+              </div>
+
+              {/* Product Info */}
+              <div className='p-4'>
+                <p className='text-sm text-gray-500 mb-1'>{product.category}</p>
+                <h3 className='mb-2 line-clamp-1'>{product.name}</h3>
+
+                {/* Rating */}
+                <div className='flex items-center gap-1 mb-3'>
+                  <Star className='w-4 h-4 fill-yellow-400 text-yellow-400' />
+                  {product.rating}
+                </div>
+
+                {/* Price */}
+                <div className='flex items-center gap-2 mb-4'>
+                  <span className='font-semibold'>
+                    {formatRupiah(product.price)}
+                  </span>
+                </div>
+
+                {/* Add to Cart Button */}
                 <Button
-                  size='sm'
-                  className='bg-white text-black hover:bg-gray-100'
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    addToCart(product.id, 1);
+                  }}
+                  className='w-full'
+                  variant='outline'
                 >
                   <ShoppingCart className='w-4 h-4 mr-2' />
-                  Quick Add
+                  <p>Add to chart</p>
                 </Button>
               </div>
             </div>
-
-            {/* Product Info */}
-            <div className='p-4'>
-              <p className='text-sm text-gray-500 mb-1'>{product.category}</p>
-              <h3 className='mb-2 line-clamp-1'>{product.name}</h3>
-
-              {/* Rating */}
-              <div className='flex items-center gap-1 mb-3'>
-                <Star className='w-4 h-4 fill-yellow-400 text-yellow-400' />
-                {product.rating}
-              </div>
-
-              {/* Price */}
-              <div className='flex items-center gap-2 mb-4'>
-                <span className='font-semibold'>
-                  {formatRupiah(product.price)}
-                </span>
-              </div>
-
-              {/* Add to Cart Button */}
-              <Button
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  addToCart(product.id, 1);
-                }}
-                className='w-full'
-                variant='outline'
-              >
-                <ShoppingCart className='w-4 h-4 mr-2' />
-                <p>Add to chart</p>
-              </Button>
-            </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
