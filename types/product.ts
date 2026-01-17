@@ -7,6 +7,7 @@ export interface Product {
   quantity: number;
   reviews: number;
   image: string;
+  description?: string;
 }
 
 export interface APIResponse<T> {

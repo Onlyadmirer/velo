@@ -18,13 +18,14 @@ import { IoPerson } from "react-icons/io5";
 import { RiShoppingBag4Line } from "react-icons/ri";
 
 function MobileNav() {
-  const [isMounted, setIsMounted] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
   }, []);
 
-  if (!isMounted) {
+  if (!mounted) {
     return null;
   }
 

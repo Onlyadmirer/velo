@@ -11,14 +11,21 @@ import Cookies from "js-cookie";
 import { FiLogIn } from "react-icons/fi";
 
 function DekstopNav() {
+  const [mounted, setMounted] = useState(false);
   const pathName = usePathname();
   const router = useRouter();
-  const [isLogIn, setIsLogIn] = useState(false);
+  const [isLogIn] = useState(() => {
+    return Boolean(Cookies.get("token"));
+  });
 
   useEffect(() => {
-    const token = Cookies.get("token");
-    if (token) setIsLogIn(true);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
   }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <div className='max-w-7xl px-8 m-auto flex flex-row justify-between'>
