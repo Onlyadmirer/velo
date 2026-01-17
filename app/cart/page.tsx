@@ -97,7 +97,7 @@ function CartPage() {
                     <div className='flex flex-col sm:flex-row gap-2 md:items-center justify-between mt-4'>
                       <div className='space-y-1'>
                         <h2 className='text-gray-600'>
-                          stock: {item.product?.quantity}
+                          stock: {item.product?.stock}
                         </h2>
                         <h1 className='font-semibold text-gray-900'>
                           {formatRupiah(item.product?.price)}
@@ -108,7 +108,7 @@ function CartPage() {
                       <div className='flex items-center gap-2 overflow-hidden'>
                         <Button
                           onClick={() =>
-                            updateQuantity(item.id, item.quantity - 1)
+                            updateQuantity(item.id, item.quantity, -1)
                           }
                           aria-label='Decrease quantity'
                         >
@@ -119,7 +119,7 @@ function CartPage() {
                         </span>
                         <Button
                           onClick={() =>
-                            updateQuantity(item.id, item.quantity + 1)
+                            updateQuantity(item.id, item.quantity, 1)
                           }
                           aria-label='Increase quantity'
                         >
