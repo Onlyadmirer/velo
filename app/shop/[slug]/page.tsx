@@ -20,7 +20,7 @@ function ProductDetail() {
 
   const updateQuantity = (newQuantity: number) => {
     if (newQuantity < 1) return;
-    if (newQuantity > (product?.quantity || 0)) return;
+    if (newQuantity > (product?.stock || 0)) return;
     setQty(newQuantity);
   };
   useEffect(() => {
@@ -95,7 +95,7 @@ function ProductDetail() {
                 <Button onClick={() => updateQuantity(qty + 1)}>+</Button>
               </div>
               <span className='text-sm text-gray-500'>
-                Stok: {product.quantity}
+                Stok: {product.stock}
               </span>
             </div>
 
