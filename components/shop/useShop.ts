@@ -27,7 +27,7 @@ export const useShop = () => {
         toast.error("Quantity must be at least 1");
         return;
       }
-      if (cartItems.some(item => item.product.id === productID && (item.quantity + quantity) > item.product.quantity)) {
+      if (cartItems.some(item => item.product.id === productID && (item.quantity + quantity) > item.product.stock)) {
         toast.error("Maaf, stok hanya tersisa 5 dan Anda sudah memiliki semuanya di keranjang.");
         return;
       }
@@ -35,10 +35,11 @@ export const useShop = () => {
       await fetchAPI("/cart", {
         method: "POST",
         body: JSON.stringify({
-          product_id: parseInt(productID.toString()),
-          quantity: parseInt(quantity.toString())
+          product_id: productID,
+          quantity: quantity
         })
       })
+
       toast.success("Product added to cart");
     } catch (error) {
       console.error(error);

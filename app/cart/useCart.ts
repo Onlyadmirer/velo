@@ -54,8 +54,20 @@ export function useCart() {
     }
   }
 
-  const removeItem = (id: number) => {
+  const removeItem = async (id: number) => {
+    const previousCart = [...cartItems]
     setCartItems(cartItems.filter((item) => item.id !== id));
+
+    try {
+      await fetchAPI(`/cart/${id}`, {
+        method: "DELETE",
+      })
+      toast.success("Item removed from cart");
+    } catch (error) {
+      console.error("Failed to remove cart item:", error);
+      toast.error("Failed to remove cart item");
+      setCartItems(previousCart)
+    }
   };
 
   const subtotal = cartItems.reduce(
