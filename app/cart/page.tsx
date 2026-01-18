@@ -1,14 +1,15 @@
 "use client";
 
-import { Minus, Plus, Trash2, ShoppingBag, ArrowLeft } from "lucide-react";
+import { Minus, Plus, ShoppingBag, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "./useCart";
 import { formatRupiah } from "@/lib/formatRupiah";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import ConfirmDelete from "@/components/cart/ConfirmDelete";
 
 function CartPage() {
-  const { cartItems, subtotal, removeItem, updateQuantity } = useCart();
+  const { cartItems, subtotal, updateQuantity, removeItem } = useCart();
   const router = useRouter();
 
   if (cartItems.length === 0) {
@@ -84,13 +85,7 @@ function CartPage() {
                           {item.product?.name}
                         </h3>
                       </div>
-                      <Button
-                        onClick={() => removeItem(item.id)}
-                        variant={"destructive"}
-                        aria-label='Remove item'
-                      >
-                        <Trash2 className='w-5 h-5' />
-                      </Button>
+                      <ConfirmDelete item={item} removeItem={removeItem} />
                     </div>
 
                     {/* Price and Quantity */}
@@ -119,7 +114,7 @@ function CartPage() {
                         </span>
                         <Button
                           onClick={() =>
-                            updateQuantity(item.id, item.quantity, 1)
+                            updateQuantity(item.id, item.quantity, +1)
                           }
                           aria-label='Increase quantity'
                         >
