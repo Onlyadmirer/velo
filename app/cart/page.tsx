@@ -1,17 +1,22 @@
 "use client";
 
-import { Minus, Plus, ShoppingBag, ArrowLeft } from "lucide-react";
+import { ShoppingBag, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "./useCart";
 import { formatRupiah } from "@/lib/formatRupiah";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import ConfirmDelete from "@/components/cart/ConfirmDelete";
+import UpdateQuantityItem from "@/components/fragments/UpdateQuantityItem";
 
 function CartPage() {
-  const { cartItems, subtotal, updateQuantity, removeItem } = useCart();
+  const { cartItems, subtotal, updateQuantity, removeItem, isLoading } =
+    useCart();
   const router = useRouter();
 
+  if (isLoading) {
+    return <div className='text-center py-20'>Loading...</div>;
+  }
   if (cartItems.length === 0) {
     return (
       <div className='min-h-screen bg-white'>
@@ -100,27 +105,12 @@ function CartPage() {
                       </div>
 
                       {/* Quantity Selector */}
-                      <div className='flex items-center gap-2 overflow-hidden'>
-                        <Button
-                          onClick={() =>
-                            updateQuantity(item.id, item.quantity, -1)
-                          }
-                          aria-label='Decrease quantity'
-                        >
-                          <Minus className='w-4 h-4' />
-                        </Button>
-                        <span className='px-4 py-2 min-w-12 text-center border rounded-md border-gray-300'>
-                          {item.quantity}
-                        </span>
-                        <Button
-                          onClick={() =>
-                            updateQuantity(item.id, item.quantity, +1)
-                          }
-                          aria-label='Increase quantity'
-                        >
-                          <Plus className='w-4 h-4' />
-                        </Button>
-                      </div>
+                      <UpdateQuantityItem
+                        cartId={item.id}
+                        initialQuantity={item.quantity}
+                        maxStock={item.product?.stock || 0}
+                        onUpdate={updateQuantity}
+                      />
                     </div>
 
                     {/* Subtotal for this item */}
