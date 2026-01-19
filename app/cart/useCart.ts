@@ -1,58 +1,54 @@
 
 import { fetchAPI } from "@/lib/fetcher";
 import { CartItem } from "@/types/cart";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export function useCart() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchCartItems = async () => {
+  const fetchCartItems = async () => {
+    setIsLoading(true);
+    try {
       const response = await fetchAPI("/cart", {
         cache: "no-store",
         method: "GET",
       });
       setCartItems(response.data || []);
-    };
+    } catch (error) {
+      console.error("Failed to fetch cart items:", error);
+      toast.error("Failed to fetch cart items");
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchCartItems();
-  }, []);
+  }, [])
 
-  const updateQuantity = async (id: number, currentQuantity: number, change: number) => {
-    const newQuantity = currentQuantity + change
-    if (newQuantity < 1) return;
-    setCartItems((prevItems) =>
-      prevItems.map((item): CartItem => {
-        if (item.id === id) {
-          if (newQuantity > item.product.stock) return item
-          return { ...item, quantity: newQuantity }
-        }
-        return item
-      })
-    )
 
+  const updateQuantity = useCallback(async (id: number, newQty: number) => {
+    const previousCart = [...cartItems]
+    setCartItems((items) =>
+      items.map((item) =>
+        item.id === id ? { ...item, quantity: newQty } : item
+      )
+    );
     try {
       await fetchAPI(`/cart/${id}`, {
         method: "PUT",
-        body: JSON.stringify({
-          quantity: newQuantity,
-        })
+        body: JSON.stringify({ quantity: newQty }),
+        keepalive: true,
       })
     } catch (error) {
       console.error("Failed to update cart item quantity:", error);
       toast.error("Failed to update cart item quantity");
-      setCartItems((prevItems) =>
-        prevItems.map((item): CartItem => {
-          if (item.id === id) {
-            if (newQuantity > item.product.stock) return item
-            return { ...item, quantity: newQuantity }
-          }
-          return item
-        })
-      )
+      setCartItems(previousCart)
     }
-  }
+  }, [cartItems]);
 
   const removeItem = async (id: number) => {
     const previousCart = [...cartItems]
@@ -71,7 +67,7 @@ export function useCart() {
   };
 
   const subtotal = cartItems.reduce(
-    (sum, item) => sum + item.product.price * item.quantity,
+    (sum, item) => sum + (item.product?.price ?? 0) * item.quantity,
     0
   );
 
@@ -79,6 +75,7 @@ export function useCart() {
     cartItems,
     subtotal,
     removeItem,
-    updateQuantity
+    updateQuantity,
+    isLoading
   };
 }
