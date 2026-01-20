@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 interface Category {
   id: number;
@@ -54,7 +55,8 @@ export function Category() {
   return (
     <div className='flex flex-row mx-auto w-full overflow-x-scroll scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent py-1 gap-4 mb-8'>
       {categories.map((category) => (
-        <div
+        <Link
+          href={`/shop/category/${category.name}`}
           key={category.id}
           className='relative group cursor-pointer overflow-hidden w-[200px] shrink-0 rounded-lg aspect-4/5'
         >
@@ -68,7 +70,7 @@ export function Category() {
           <div className='absolute bottom-0 left-0 right-0 p-4'>
             <h3 className='text-white drop-shadow-lg'>{category.name}</h3>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );
