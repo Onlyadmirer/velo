@@ -1,3 +1,6 @@
+import Image from "next/image";
+import Link from "next/link";
+
 interface Category {
   id: number;
   name: string;
@@ -7,39 +10,44 @@ interface Category {
 const categories: Category[] = [
   {
     id: 1,
-    name: "Component Desks",
-    image:
-      "https://images.unsplash.com/photo-1622579521534-8252f7da47fd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtaW5pbWFsaXN0JTIwZGVzayUyMHdoaXRlfGVufDF8fHx8MTc2Nzg3MDI3OHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+    name: "Shirts",
+    image: "https://res.cloudinary.com/drldcq7wa/image/upload/shirt_p95jml",
   },
   {
     id: 2,
-    name: "Office Desks",
+    name: "Dress",
     image:
-      "https://images.unsplash.com/photo-1623679116710-78b05d2fe2f3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBvZmZpY2UlMjBkZXNrfGVufDF8fHx8MTc2Nzc1OTU1NHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "https://res.cloudinary.com/drldcq7wa/image/upload/elegant-dress_xfcypk",
   },
   {
     id: 3,
-    name: "Gaming Desks",
-    image:
-      "https://images.unsplash.com/photo-1594636797501-ef436e157819?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxnYW1pbmclMjBkZXNrJTIwc2V0dXB8ZW58MXx8fHwxNzY3NzUzOTkyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+    name: "Jackets",
+    image: "https://res.cloudinary.com/drldcq7wa/image/upload/jacket_mxdomj",
   },
   {
     id: 4,
-    name: "Glass Desks",
-    image:
-      "https://images.unsplash.com/photo-1623679116710-78b05d2fe2f3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxnbGFzcyUyMGRlc2slMjBvZmZpY2V8ZW58MXx8fHwxNzY3ODcwMjc4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+    name: "Pants",
+    image: "https://res.cloudinary.com/drldcq7wa/image/upload/jeans_jllwmp",
   },
   {
     id: 5,
-    name: "Standing Desks",
-    image:
-      "https://images.unsplash.com/photo-1632923946466-94782643dfb0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzdGFuZGluZyUyMGRlc2slMjB3b3Jrc3BhY2V8ZW58MXx8fHwxNzY3ODcwMjc4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+    name: "Shoes",
+    image: "https://res.cloudinary.com/drldcq7wa/image/upload/shoe_nvmgfo",
   },
   {
     id: 6,
-    name: "Standing Desks",
-    image:
-      "https://images.unsplash.com/photo-1632923946466-94782643dfb0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzdGFuZGluZyUyMGRlc2slMjB3b3Jrc3BhY2V8ZW58MXx8fHwxNzY3ODcwMjc4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+    name: "Bags",
+    image: "https://res.cloudinary.com/drldcq7wa/image/upload/bag_a1q6zh",
+  },
+  {
+    id: 7,
+    name: "Sweaters",
+    image: "https://res.cloudinary.com/drldcq7wa/image/upload/sweater_ubzjh0",
+  },
+  {
+    id: 8,
+    name: "Skirts",
+    image: "https://res.cloudinary.com/drldcq7wa/image/upload/rok_m86dlz",
   },
 ];
 
@@ -47,20 +55,22 @@ export function Category() {
   return (
     <div className='flex flex-row mx-auto w-full overflow-x-scroll scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent py-1 gap-4 mb-8'>
       {categories.map((category) => (
-        <div
+        <Link
+          href={`/shop/category/${category.name}`}
           key={category.id}
           className='relative group cursor-pointer overflow-hidden w-[200px] shrink-0 rounded-lg aspect-4/5'
         >
-          <img
+          <Image
             src={category.image}
             alt={category.name}
+            fill
             className='w-full h-full object-cover group-hover:scale-110 transition-transform duration-300'
           />
           <div className='absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent'></div>
           <div className='absolute bottom-0 left-0 right-0 p-4'>
             <h3 className='text-white drop-shadow-lg'>{category.name}</h3>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );
